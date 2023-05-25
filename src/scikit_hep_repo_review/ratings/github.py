@@ -165,7 +165,18 @@ class GH211(GitHub):
                     if "actions/*" in ignore.get("dependency-name", ""):
                         return False
         return True
+    
+    
+class GH212(GitHub):
+    "Has Dev Container config"
 
+    @staticmethod
+    def check(package: Traversable) -> bool:
+        """
+        All projects should have Dev Container configuration file.
+        """
+        return bool(package.joinpath(".devcontainer/devcontainer.json").is_file())
+    
 
 repo_review_fixtures = {"workflows", "dependabot"}
 repo_review_checks = {p.__name__ for p in GitHub.__subclasses__()}
